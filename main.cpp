@@ -17,13 +17,13 @@ int main()
     sf::Font font;
     GameMenu menu(desctop_size, texture, font);
     
-    menu.create_background("images/backgrounds/main_menu.jpg");
-    menu.load_font("fonts/Wobblezz.ttf");
-    menu.create_menu_items();
+    menu.createBackground("images/backgrounds/main_menu.jpg");
+    menu.loadFont("fonts/Wobblezz.ttf");
+    menu.createMenuItems();
 
 
     sf::Vector2f menu_position(950.0, 200.0);
-    menu.set_menu_position(menu_position, MENU_ITEMS_STEP_Y);
+    menu.setMenuPosition(menu_position, MENU_ITEMS_STEP_Y);
 
 
     // run the program as long as the window is open
@@ -42,10 +42,10 @@ int main()
                 if (event.key.code == sf::Keyboard::Key::Up || 
                     event.key.code == sf::Keyboard::Key::Down)
                 {
-                    menu.choose_menu_item(event.key.code);
+                    menu.chooseMenuItem(event.key.code);
                 }
                 if (event.key.code == sf::Keyboard::Key::Enter)
-                    menu.go_to_menu_point(window);
+                    menu.goToMenuPoint(window);
             }
             
         }

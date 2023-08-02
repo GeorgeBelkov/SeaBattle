@@ -1,13 +1,13 @@
 #include "../include/GameMenu.hpp"
 
 
-void GameMenu::load_font(sf::String const& font_path)
+void GameMenu::loadFont(sf::String const& font_path)
 {
     font.loadFromFile(font_path);
 }
 
 
-void GameMenu::create_menu_items()
+void GameMenu::createMenuItems()
 {
     sf::String menu_items[MENU_MEMBERS] = { "New game", "Settings", "About game", "Exit" };
     points = new sf::Text[MENU_MEMBERS];
@@ -25,7 +25,7 @@ void GameMenu::create_menu_items()
 }
 
 
-void GameMenu::choose_menu_item(sf::Keyboard::Key key)
+void GameMenu::chooseMenuItem(sf::Keyboard::Key key)
 {
     switch (key)
     {
@@ -60,7 +60,7 @@ void GameMenu::choose_menu_item(sf::Keyboard::Key key)
 }
 
 
-void GameMenu::set_menu_position(sf::Vector2f& position, int step)
+void GameMenu::setMenuPosition(sf::Vector2f& position, int step)
 {
     for (size_t i = 0; i < MENU_MEMBERS; i++)
     {
@@ -71,7 +71,7 @@ void GameMenu::set_menu_position(sf::Vector2f& position, int step)
 }
 
 
-void GameMenu::go_to_menu_point(sf::RenderWindow& window) const
+void GameMenu::goToMenuPoint(sf::RenderWindow& window) const
 {
     int index = 0;
     for (; index < MENU_MEMBERS; index++)
@@ -104,7 +104,7 @@ void GameMenu::go_to_menu_point(sf::RenderWindow& window) const
 }
 
 
-void GameMenu::create_background(const sf::String img_path)
+void GameMenu::createBackground(const sf::String img_path)
 {
     texture_menu_window.loadFromFile(img_path);     // creating a background texture
     background.setTexture(&texture_menu_window);

@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#define MENU_MEMBERS 4
-#define CARACTER_SIZE 100
-#define MENU_ITEMS_STEP_Y 100
+constexpr int MENU_MEMBERS = 4;
+constexpr int CARACTER_SIZE = 100;
+constexpr int MENU_ITEMS_STEP_Y = 100;
 
 
 static int focused_item = 0;
@@ -20,13 +20,13 @@ public:
     
     sf::Text operator[](size_t index) const { return points[index]; }
     sf::RectangleShape getBackground() const { return background; }
-    void go_to_menu_point(sf::RenderWindow& window) const;
+    void goToMenuPoint(sf::RenderWindow& window) const;
 
-    void create_menu_items();
-    void load_font(sf::String const& font_path);
-    void choose_menu_item(sf::Keyboard::Key key);
-    void set_menu_position(sf::Vector2f& position, int step);
-    void create_background(const sf::String img_path);
+    void createMenuItems();
+    void loadFont(sf::String const& font_path);
+    void chooseMenuItem(sf::Keyboard::Key key);
+    void setMenuPosition(sf::Vector2f& position, int step);
+    void createBackground(const sf::String img_path);
 
 private:
     GameMenu(GameMenu& menu);

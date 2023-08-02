@@ -1,12 +1,6 @@
 #include "../include/GameMenu.hpp"
 
 
-void GameMenu::loadFont(sf::String const& font_path)
-{
-    font.loadFromFile(font_path);
-}
-
-
 void GameMenu::createMenuItems()
 {
     sf::String menu_items[MENU_MEMBERS] = { "New game", "Settings", "About game", "Exit" };
@@ -101,11 +95,4 @@ void GameMenu::goToMenuPoint(sf::RenderWindow& window) const
 
     window.setTitle("SEA BATTLE");
     window.setMouseCursorVisible(false);
-}
-
-
-void GameMenu::createBackground(const sf::String img_path)
-{
-    texture_menu_window.loadFromFile(img_path);     // creating a background texture
-    background.setTexture(&texture_menu_window);
 }

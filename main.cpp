@@ -1,4 +1,4 @@
-#include "include/GameMenu.hpp"
+#include "include/GameMenuScreen.hpp"
 
 
 int main()
@@ -15,7 +15,7 @@ int main()
 
     sf::Texture texture;
     sf::Font font;
-    GameMenu menu(desctop_size, texture, font);
+    GameMenuScreen menu(desctop_size, texture, font);
     
     menu.createBackground("images/backgrounds/main_menu.jpg");
     menu.loadFont("fonts/Wobblezz.ttf");
@@ -45,7 +45,28 @@ int main()
                     menu.chooseMenuItem(event.key.code);
                 }
                 if (event.key.code == sf::Keyboard::Key::Enter)
-                    menu.goToMenuPoint(window);
+                {
+                    switch (menu.getFocusedItem())
+                    {
+                        case 0:
+                            // start_game();
+                            break;
+                        case 1:
+                            // settings();
+                            break;
+                        case 2:
+                            // about_game(window);
+                            break;
+                        case 3:
+                            window.close();
+                            break;
+
+                        default:
+                            break;
+                    }
+                    window.setTitle("SEA BATTLE");
+                    window.setMouseCursorVisible(false);
+                }
             }
             
         }

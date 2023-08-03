@@ -1,4 +1,5 @@
-#include "include/GameMenu.hpp"
+#include "include/GameMenuScreen.hpp"
+#include "include/AboutScreen.hpp"
 
 
 int main()
@@ -15,7 +16,7 @@ int main()
 
     sf::Texture texture;
     sf::Font font;
-    GameMenu menu(desctop_size, texture, font);
+    GameMenuScreen menu(desctop_size, texture, font);
     
     menu.createBackground("images/backgrounds/main_menu.jpg");
     menu.loadFont("fonts/Wobblezz.ttf");
@@ -24,6 +25,10 @@ int main()
 
     sf::Vector2f menu_position(950.0, 200.0);
     menu.setMenuPosition(menu_position, MENU_ITEMS_STEP_Y);
+
+    AboutScreen about(desctop_size, texture, font);
+    about.createBackground("images/backgrounds/about.jpg");
+    about.loadFont("fonts/Wobblezz.ttf");
 
 
     // run the program as long as the window is open
@@ -45,7 +50,28 @@ int main()
                     menu.chooseMenuItem(event.key.code);
                 }
                 if (event.key.code == sf::Keyboard::Key::Enter)
-                    menu.goToMenuPoint(window);
+                {
+                    switch (menu.getFocusedItem())
+                    {
+                        case 0:
+                            // goToGameScreen(window);
+                            break;
+                        case 1:
+                            // goToSettingsScreen(window);
+                            break;
+                        case 2:
+                            menu.goToAboutScreen(window, about);
+                            break;
+                        case 3:
+                            window.close();
+                            break;
+                        default:
+                            break;
+                    }   
+
+                    window.setTitle("SEA BATTLE");
+                    window.setMouseCursorVisible(false);
+                }
             }
             
         }

@@ -1,7 +1,6 @@
-#include "../include/GameMenu.hpp"
+#include "../include/GameMenuScreen.hpp"
 
-
-void GameMenu::createMenuItems()
+void GameMenuScreen::createMenuItems()
 {
     sf::String menu_items[MENU_MEMBERS] = { "New game", "Settings", "About game", "Exit" };
     points = new sf::Text[MENU_MEMBERS];
@@ -19,7 +18,7 @@ void GameMenu::createMenuItems()
 }
 
 
-void GameMenu::chooseMenuItem(sf::Keyboard::Key key)
+void GameMenuScreen::chooseMenuItem(sf::Keyboard::Key key)
 {
     switch (key)
     {
@@ -54,7 +53,7 @@ void GameMenu::chooseMenuItem(sf::Keyboard::Key key)
 }
 
 
-void GameMenu::setMenuPosition(sf::Vector2f& position, int step)
+void GameMenuScreen::setMenuPosition(sf::Vector2f& position, int step)
 {
     for (size_t i = 0; i < MENU_MEMBERS; i++)
     {
@@ -65,34 +64,13 @@ void GameMenu::setMenuPosition(sf::Vector2f& position, int step)
 }
 
 
-void GameMenu::goToMenuPoint(sf::RenderWindow& window) const
-{
-    int index = 0;
-    for (; index < MENU_MEMBERS; index++)
-    {
-        if (points[index].getFillColor() == sf::Color::Red)
-            break;
-    }
+//void GameMenuScreen::goToSettingsScreen(sf::RenderWindow& window, SettingsScreen& settings) const
+//{
+//    
+//}
 
-    switch (index)
-    {
-    case 0:
-        // start_game();
-        break;
-    case 1:
-        // settings();
-        break;
-    case 2:
-        // about_game(window);
-        break;
-    case 3:
-        window.close();
-        break;
-    
-    default:
-        break;
-    }
 
-    window.setTitle("SEA BATTLE");
-    window.setMouseCursorVisible(false);
-}
+// void GameMenuScreen::goToGameScreen(sf::RenderWindow& window, GameScreen& game) const
+// {
+//   
+// }

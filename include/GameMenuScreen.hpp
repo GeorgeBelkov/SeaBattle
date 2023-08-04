@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "AboutScreen.hpp"
 #include "Screen.hpp"
 
 constexpr int MENU_MEMBERS = 4;             // number of menu points
@@ -20,9 +21,9 @@ public:
     sf::Text operator[](size_t index) const { return points[index]; }                               // returns point of the menu
     int getFocusedItem() const { return focused_item; }
 
-    // void goToAboutScreen(sf::RenderWindow& window, AboutScreen& about) const { about.aboutGame(window); }
-    // void goToSettingsScreen(sf::RenderWindow& window, SettingsScreen& settings) const { settings.game_config(window, settings); }
-    // void goToGameScreen(sf::RenderWindow& window, GameScreen& game) const { game.run_game(window, game); }
+    void goToAboutScreen(sf::RenderWindow& window, AboutScreen& about) const { about.runAboutScreen(window); }
+    // void goToSettingsScreen(sf::RenderWindow& window, SettingsScreen& settings) const { settings.runSettingsScreen(window); }
+    // void goToGameScreen(sf::RenderWindow& window, GameScreen& game) const { game.runGameScreen(window); }
 
     void createMenuItems();
     void chooseMenuItem(sf::Keyboard::Key key);

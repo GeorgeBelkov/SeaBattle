@@ -1,8 +1,11 @@
+#include <string_view>
+#include <string>
+
 #include "include/GameMenuScreen.hpp"
 #include "include/AboutScreen.hpp"
 
 
-static sf::String topic(
+constexpr std::string_view screen_topic(
     "The game is based on the SFML graphics library. There is no single player mode.\n"    \
     "  The game can be played with friends. The player performing the move makes a  \n"    \    
     "shot - presses on the cell in which, in his opinion, the enemy ship is located,\n"    \
@@ -11,6 +14,19 @@ static sf::String topic(
     "    square in this place. The game continues until one of the players hits     \n"    \       
     "                      all the enemy ships.                                       "    \
 );
+
+
+
+inline void loadFontFromFile(std::filesystem::path const& font_path, sf::Font& font)
+{
+    font.loadFromFile(font_path);
+}
+
+
+inline void loadTextureFromFile(std::filesystem::path const& img_path, sf::Texture& texture)
+{
+    texture.loadFromFile(img_path);
+}
 
 
 int main()
@@ -23,27 +39,38 @@ int main()
         sf::VideoMode::getDesktopMode().width,
         sf::VideoMode::getDesktopMode().height
     );
+ 
     sf::Texture texture;
+    loadTextureFromFile("images/backgrounds/main_menu.jpg", texture);
     sf::Font font;
-    sf::Text text;
+    loadFontFromFile("fonts/Wobblezz.ttf", font);
 
-    GameMenuScreen menu(desctop_size, texture, font);                      // create GameMenu obj and set data
+    GameMenuScreen menu(desctop_size);                                       // create GameMenu obj and set data
     
-    menu.createBackground("images/backgrounds/main_menu.jpg");
-    menu.loadFont("fonts/Wobblezz.ttf");
+    menu.setFont(font);
+    menu.setTexture(texture);
+    menu.setBackground();
     menu.createMenuItems();
 
-    sf::Vector2f menu_position(950.0, 200.0);                              // Text position on the screen
+    sf::Vector2f menu_position(950.0, 200.0);                                // Text position on the screen
     menu.setMenuPosition(menu_position, MENU_ITEMS_STEP_Y);
 
-    AboutScreen about(desctop_size, texture, font, text, text);
 
-    about.createBackground("images/backgrounds/about.jpg");
-    about.loadFont("fonts/Marlboro.ttf");
-    TextFeatures title_features(CARACTER_SIZE, sf::String(L"ABOUT GAME"));
-    TextFeatures topic_features(CARACTER_SIZE / 3, topic);
-    about.setTitle(title_features);
-    about.setTopic(topic_features);
+    ////////////////////////////////////////////////////////////////////
+
+
+    sf::String screen_title = "ABOUT GAME";
+
+    AboutScreen about(desctop_size, screen_title, static_cast<std::string>(screen_topic));
+
+    loadTextureFromFile("images/backgrounds/about.jpg", texture);
+    loadFontFromFile("fonts/Marlboro.ttf", font);
+
+    about.setFont(font);
+    about.setTexture(texture);
+    about.setBackground();
+    about.setTitle(sf::Color::Black);
+    about.setTopic(sf::Color::Black);
 
 
     while (window.isOpen())

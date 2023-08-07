@@ -4,17 +4,20 @@
 #include "AboutScreen.hpp"
 #include "Screen.hpp"
 
-constexpr int MENU_MEMBERS = 4;             // number of menu points
-constexpr int CARACTER_SIZE = 100;          // font size
-constexpr int MENU_ITEMS_STEP_Y = 100;      // distance between points by Y 
+constexpr static size_t MENU_MEMBERS = 4;                      // number of menu points
+constexpr static int MENU_ITEMS_STEP_Y = 100;               // distance between points by Y 
+
 
 
 class GameMenuScreen : public Screen
 {
+private:
+    std::vector<sf::Text> points;
+    int focused_item = 0;                // range from 0 to MENU_MEMBERS - 1. Provides info about current "active" point
+
 public:
-    GameMenuScreen(sf::Vector2f& desctop_size, sf::Texture texture, sf::Font font)
-        : Screen(desctop_size, texture, font), points(nullptr) {}
-    ~GameMenuScreen() { delete[] points; }
+    GameMenuScreen(sf::Vector2f& desctop_size): Screen(desctop_size), points(MENU_MEMBERS) {}
+    ~GameMenuScreen() = default;
     GameMenuScreen(GameMenuScreen& menu) = delete;
     GameMenuScreen& operator=(GameMenuScreen& menu) = delete;
 
@@ -28,8 +31,4 @@ public:
     void createMenuItems();
     void chooseMenuItem(sf::Keyboard::Key key);
     void setMenuPosition(sf::Vector2f& position, int step);
-
-private:
-    sf::Text* points;
-    int focused_item = 0;                // range from 0 to MENU_MEMBERS - 1. Provides info about current "active" point
 };

@@ -1,14 +1,19 @@
 #include "Screen.hpp"
 
 
-void Screen::loadFont(sf::String const& font_path)
+void Screen::setFont(sf::Font& font)
 {
-    font.loadFromFile(font_path);
+    this->font = font;
 }
 
 
-void Screen::createBackground(sf::String const& img_path)
+void Screen::setTexture(sf::Texture& texture)
 {
-    texture.loadFromFile(img_path);     // creating a background texture
-    background.setTexture(&texture);
+    this->background_texture = texture;
+}
+
+
+void Screen::setBackground()
+{
+    background.setTexture(&background_texture);
 }

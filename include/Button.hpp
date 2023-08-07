@@ -3,15 +3,24 @@
 #include <SFML/Graphics.hpp>
 
 
+// Represents button entity. Can be placed in different parts of window.
 class Button
 {
+private:
+    sf::RectangleShape borders;
+    sf::Color background_color;
+    sf::Text name;
+    sf::Vector2f size;
+    sf::Vector2f pos;
+    sf::Vector2f text_pos;
+    bool is_pressed = false;
+
 public:
-    Button(sf::RectangleShape btn, sf::Text btn_name, sf::Color btn_background, sf::Vector2f btn_pos, sf::Vector2f text_pos)
-        : button_borders(btn), button_background_color(btn_background),
-          button_name(btn_name), btn_size(button_borders.getSize()), btn_pos(btn_pos), text_pos(text_pos)
+    Button(sf::RectangleShape borders, sf::Text name, sf::Color background_color, sf::Vector2f btn_pos, sf::Vector2f text_pos)
+        : borders(borders), background_color(background_color), name(name), size(borders.getSize()), pos(btn_pos), text_pos(text_pos)
     {
-        this->button_borders.setFillColor(button_background_color);
-        this->button_name.setPosition(text_pos);
+        this->borders.setFillColor(background_color);
+        this->name.setPosition(text_pos);
     }
     ~Button() = default;
     
@@ -22,14 +31,5 @@ public:
     void setIsPressed(bool newVal) { is_pressed = newVal; }                     // Get and Set is_pressed point
     bool getIsPressed() const { return is_pressed; }
 
-    sf::Vector2f getButtonPos() const { return button_borders.getPosition(); }
-
-private:
-    sf::RectangleShape button_borders;
-    sf::Color button_background_color;
-    sf::Text button_name;
-    sf::Vector2f btn_size;
-    sf::Vector2f btn_pos;
-    sf::Vector2f text_pos;
-    bool is_pressed = false;
+    sf::Vector2f getButtonPos() const { return borders.getPosition(); }
 };

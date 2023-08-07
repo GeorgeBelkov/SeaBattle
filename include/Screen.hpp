@@ -1,26 +1,30 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <filesystem>
 
 
+constexpr static unsigned int CHARACTER_SIZE = 100;         // font size
+
+
+// Class Screen is the Parent of all Game Screens. It helps you to configurate sf::RenderWindow.
 class Screen
 {
-public:
-    Screen(sf::Vector2f& desctop_size, sf::Texture texture, sf::Font font)
-        : background(desctop_size), texture(texture), font(font) {}
-    ~Screen() {}
-
-    
-    sf::RectangleShape getBackground() const { return background; }
-    void loadFont(sf::String const& font_path);
-    void createBackground(sf::String const& img_path);
-
 protected:
     sf::RectangleShape background;
-    sf::Texture texture;
+    sf::Texture background_texture;
     sf::Font font;
 
-private:
-    Screen(Screen& screen);
-    Screen& operator=(Screen& screen);
+public:
+    Screen(sf::Vector2f& desctop_size)
+        : background(desctop_size), background_texture(sf::Texture()), font(sf::Font()) {}
+    ~Screen() = default;
+    Screen(Screen& screen) = delete;
+    Screen& operator=(Screen& screen) = delete;
+    
+    sf::RectangleShape getBackground() const { return background; }
+    
+    void setFont(sf::Font& font);
+    void setTexture(sf::Texture& texture);
+    void setBackground();
 };

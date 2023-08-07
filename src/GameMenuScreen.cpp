@@ -1,18 +1,17 @@
 #include "GameMenuScreen.hpp"
+#include <array>
 
-
+// Represents Main menu
 void GameMenuScreen::createMenuItems()
 {
-    sf::String menu_items[MENU_MEMBERS] = { "New game", "Settings", "About game", "Exit" };
-    points = new sf::Text[MENU_MEMBERS];
-
+    std::array<sf::String, MENU_MEMBERS> menu_items = { "New game", "Settings", "About game", "Exit" };
     int iter = 0;
 
     for(auto item : menu_items)
     {
         iter == 0 ? points[iter].setFillColor(sf::Color::Red) : points[iter].setFillColor(sf::Color::Black);
         points[iter].setString(item);
-        points[iter].setCharacterSize(CARACTER_SIZE);
+        points[iter].setCharacterSize(CHARACTER_SIZE);
         points[iter].setFont(font);
         ++iter;
     }

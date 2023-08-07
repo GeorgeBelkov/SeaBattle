@@ -7,7 +7,7 @@ void AboutScreen::runAboutScreen(sf::RenderWindow& about_window)
     about_window.setTitle("About");
     about_window.setMouseCursorVisible(true);
     
-    sf::Vector2f desctop_size(                                             // save desctop width and heigth
+    sf::Vector2f desctop_size(                                             // we can use background.getSize() and define desctop_size var only once ?
         sf::VideoMode::getDesktopMode().width,
         sf::VideoMode::getDesktopMode().height
     );
@@ -57,25 +57,19 @@ void AboutScreen::runAboutScreen(sf::RenderWindow& about_window)
 }
 
 
-void AboutScreen::setTitle(TextFeatures& conf)
+void AboutScreen::setTitle(sf::Color const color)
 {
-    title.setString(conf.text);
-    title.setFont(font);
-    title.setCharacterSize(conf.characterSize);
     title.setStyle(sf::Text::Style::Bold);
-    title.setFillColor(conf.color);
     title.setPosition(sf::Vector2f(700.0, 300.0));
+    title.setFillColor(color);
 }
 
 
-void AboutScreen::setTopic(TextFeatures& conf)
+void AboutScreen::setTopic(sf::Color const color)
 {
-    topic.setString(conf.text);
-    topic.setFont(font);
-    topic.setCharacterSize(conf.characterSize);
     sf::FloatRect titleSize = title.getLocalBounds();
     topic.setPosition(
         sf::Vector2f(title.getPosition().x - titleSize.width / 1.8, title.getPosition().y + titleSize.height * 2)
     );
-    topic.setFillColor(conf.color);
+    topic.setFillColor(color);
 }

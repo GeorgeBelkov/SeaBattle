@@ -1,5 +1,5 @@
 #include "AboutScreen.hpp"
-#include "Button.hpp"
+#include "ButtonEventProcessor.hpp"
 
 
 void AboutScreen::runAboutScreen(sf::RenderWindow& about_window)
@@ -12,11 +12,14 @@ void AboutScreen::runAboutScreen(sf::RenderWindow& about_window)
         sf::VideoMode::getDesktopMode().height
     );
 
-    sf::RectangleShape bg(sf::Vector2f(70, 50.0));
+    sf::RectangleShape bg(sf::Vector2f(70.0, 50.0));
     sf::Text text("Back", font);
-
-    Button back_button(bg, text, sf::Color::Black, sf::Vector2f(0.0, 0.0), sf::Vector2f(10.0, 5.0));
     
+    
+    auto back_button = std::make_unique<Button>(bg, text, sf::Color::Black);
+    back_button->setPos(sf::Vector2f(0.0, 0.0));
+    back_button->setTextPos(sf::Vector2f(10.0, 5.0));
+
     // run the program as long as the window is open
     while (about_window.isOpen())
     {
@@ -27,31 +30,23 @@ void AboutScreen::runAboutScreen(sf::RenderWindow& about_window)
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 about_window.close();
-            if (event.type == sf::Event::MouseButtonPressed and !back_button.getIsPressed() and
-                event.mouseButton.button == sf::Mouse::Button::Left)
+            
+            back_button->getMediator()->eventHandler(event, this);
+
+
+            if (this->getExiter()->get_flag())
             {
-                back_button.setIsPressed(true);
-                if (back_button.isCursorInButton(event.mouseButton))
-                    back_button.repaintingBackButton();
+                this->getExiter()->set_flag(false);
+                return;
             }
-            if (event.type == sf::Event::MouseButtonReleased and back_button.getIsPressed())
-            {
-                if (back_button.isCursorInButton(event.mouseButton))
-                {
-                    back_button.setIsPressed(false);
-                    return;
-                }
-                back_button.setIsPressed(false);
-                back_button.repaintingBackButton();
-            }
-                
         }
         about_window.clear(sf::Color::White);
 
         about_window.draw(background);
         about_window.draw(title);
         about_window.draw(topic);
-        back_button.drawButton(about_window);
+        back_button->drawButton(about_window);
+
         about_window.display();
     }
 }

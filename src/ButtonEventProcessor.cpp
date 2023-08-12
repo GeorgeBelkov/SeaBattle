@@ -1,5 +1,6 @@
 #include "ButtonEventProcessor.hpp"
 
+
 // ButtonMediator
 
 
@@ -22,7 +23,7 @@ void Button::ButtonMediator::eventHandler(sf::Event& event, AboutScreen* const a
             about->getExiter()->Update();
         }
         is_pressed = false;
-        on_pressed->Notify();  // Надо добавить subject on released.
+        on_released->Notify();  // Надо добавить subject on released.
     }
 }
 
@@ -39,6 +40,8 @@ void Button::ButtonMediator::clear()
     on_click = nullptr;
     delete on_pressed;
     on_pressed = nullptr;
+    delete on_released;
+    on_released = nullptr;
 }
 
 

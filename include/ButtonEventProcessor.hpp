@@ -47,13 +47,15 @@ private:
     private:
         ButtonSubject* on_click;
         ButtonSubject* on_pressed;
+        ButtonSubject* on_released;
         Button* button;
         bool is_pressed = false;
     public:
-        ButtonMediator(Button* btn): on_click(nullptr), on_pressed(nullptr), button(btn)
+        ButtonMediator(Button* btn): on_click(nullptr), on_pressed(nullptr), on_released(nullptr), button(btn)
         {
             on_click = new ButtonSubject(btn->mediator);
             on_pressed = new ButtonSubject(btn->mediator);
+            on_released = new ButtonSubject(btn->mediator);
         }
         ~ButtonMediator() { this->clear(); }
 
@@ -64,6 +66,7 @@ private:
         void setOnPressed(ButtonSubject* on_pressed) { on_pressed = on_pressed; }
         ButtonSubject* getOnClick() { return on_click; }
         ButtonSubject* getOnPressed() { return on_pressed; }
+        ButtonSubject* getOnReleased() { return on_released; }
         void setButton(Button* btn) { button = btn; }
 
         bool isCursorInButton(sf::Event::MouseButtonEvent& mouseCoords) const;
@@ -72,13 +75,13 @@ private:
     };
 
 
-    class ButtonObserver : public IObserver
+    class ButtonRepaintObserver : public IObserver
     {
     private:
         Button* btn;
     public:
-        explicit ButtonObserver(Button* btn): btn(btn) {}
-        ~ButtonObserver() override = default;
+        explicit ButtonRepaintObserver(Button* btn): btn(btn) {}
+        ~ButtonRepaintObserver() override = default;
         void Update() override { btn->repaintingButton(); }
     };
 
@@ -88,25 +91,29 @@ public:
         : borders(borders), background_color(background_color), name(name), mediator(new ButtonMediator(this))
     {
         this->borders.setFillColor(background_color);
-        IObserver* back_btn = new ButtonObserver(this);   
+        IObserver* back_btn = new ButtonRepaintObserver(this);   
         mediator->getOnClick()->Append(back_btn);
         mediator->getOnPressed()->Append(back_btn);
+        mediator->getOnReleased()->Append(back_btn);
     }
     ~Button()
     {
         auto on_click_list = mediator->getOnClick()->getObserversList();
         auto on_pressed_list = mediator->getOnPressed()->getObserversList();
+        auto on_released_list = mediator->getOnReleased()->getObserversList();
         for (auto observer : on_click_list)
         {
             delete observer;
             on_pressed_list.remove(observer);
+            on_released_list.remove(observer);
         }
         for (auto observer : on_pressed_list)
         {
-            if (observer == nullptr)
-                continue;
             delete observer;
-        }    
+            on_released_list.remove(observer);
+        }
+        for (auto observer : on_released_list)
+            delete observer; 
         delete mediator;
         mediator = nullptr;
     }

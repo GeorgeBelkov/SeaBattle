@@ -1,10 +1,10 @@
 #include "ButtonEventProcessor.hpp"
-
+#include <iostream>
 
 // ButtonMediator
 
 
-void Button::ButtonMediator::eventHandler(sf::Event& event, AboutScreen* const about)
+void Button::ButtonMediator::eventHandlerForAboutScreen(sf::Event& event, AboutScreen* const about)
 {
     if (event.type == sf::Event::MouseButtonPressed && !is_pressed &&
             event.mouseButton.button == sf::Mouse::Button::Left)
@@ -23,9 +23,34 @@ void Button::ButtonMediator::eventHandler(sf::Event& event, AboutScreen* const a
             about->getExiter()->Update();
         }
         is_pressed = false;
-        on_released->Notify();  // Надо добавить subject on released.
+        on_released->Notify();
     }
 }
+
+
+void Button::ButtonMediator::eventHandlerForGameScreen(sf::Event& event, GameScreen* const game)
+{
+    if (event.type == sf::Event::MouseButtonPressed && !is_pressed &&
+            event.mouseButton.button == sf::Mouse::Button::Left)
+    {
+        is_pressed = true;
+        if (isCursorInButton(event.mouseButton))
+            on_pressed->Notify();
+    }
+    if (event.type == sf::Event::MouseButtonReleased && is_pressed)
+    {
+        if (isCursorInButton(event.mouseButton))
+        {
+            // клик произошел
+            is_pressed = false;
+            on_click->Notify();
+            game->getGameLoader()->Update();
+        }
+        is_pressed = false;
+        on_released->Notify();
+    }
+}
+
 
 
 bool Button::ButtonMediator::isCursorInButton(sf::Event::MouseButtonEvent& mouseCoords) const

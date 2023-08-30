@@ -3,6 +3,7 @@
 
 #include "include/GameMenuScreen.hpp"
 #include "include/AboutScreen.hpp"
+#include "include/GameScreen.hpp"
 
 
 constexpr std::string_view screen_topic(
@@ -73,6 +74,23 @@ int main()
     about.setTopic(sf::Color::Black);
 
 
+    ///////////////////////////////////////////////////////////////////////
+
+    // sf::RectangleShape bg(sf::Vector2f(285.0, 115.0));
+    // sf::Text text("START", font, 36);
+    
+    
+    // auto start_button = std::make_unique<Button>(bg, text, sf::Color(204, 102, 0));
+    // start_button->setPos(sf::Vector2f(815.0, 93.0));
+    // start_button->setTextPos(sf::Vector2f(875, 129));
+
+    GameScreen game(desctop_size);
+    loadTextureFromFile("images/backgrounds/game.jpg", texture);
+    game.setTexture(texture);
+    game.setFont(font);
+    game.setBackground();
+
+
     while (window.isOpen())
     {
 
@@ -95,7 +113,7 @@ int main()
                     switch (menu.getFocusedItem())
                     {
                         case 0:
-                            // menu.goToGameScreen();
+                            menu.goToGameScreen(window, game);
                             break;
                         case 1:
                             // menu.goToSettingsScreen();

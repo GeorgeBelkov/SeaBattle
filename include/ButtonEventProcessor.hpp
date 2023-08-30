@@ -6,9 +6,12 @@
 #include <SFML/Graphics.hpp>
 
 #include "AboutScreen.hpp"
+#include "GameScreen.hpp"
 
 
 // class Button
+
+class GameScreen;
 
 
 class Button
@@ -71,7 +74,8 @@ private:
 
         bool isCursorInButton(sf::Event::MouseButtonEvent& mouseCoords) const;
 
-        void eventHandler(sf::Event& event, AboutScreen* const about);
+        void eventHandlerForAboutScreen(sf::Event& event, AboutScreen* const about);
+        void eventHandlerForGameScreen(sf::Event& event, GameScreen* const game);
     };
 
 
@@ -87,7 +91,7 @@ private:
 
 public:
 
-    Button(sf::RectangleShape borders, sf::Text name, sf::Color background_color)
+    Button(sf::RectangleShape& borders, sf::Text& name, sf::Color background_color)
         : borders(borders), background_color(background_color), name(name), mediator(new ButtonMediator(this))
     {
         this->borders.setFillColor(background_color);

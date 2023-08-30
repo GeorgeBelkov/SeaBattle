@@ -31,7 +31,7 @@ void AboutScreen::runAboutScreen(sf::RenderWindow& about_window)
             if (event.type == sf::Event::Closed)
                 about_window.close();
             
-            back_button->getMediator()->eventHandler(event, this);
+            back_button->getMediator()->eventHandlerForAboutScreen(event, this);
 
 
             if (this->getExiter()->get_flag())
